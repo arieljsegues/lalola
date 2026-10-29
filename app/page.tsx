@@ -3,6 +3,7 @@ import Hero from "@/app/components/sections/Hero";
 import MenuSection from "@/app/components/sections/MenuSection";
 import AboutSection from "@/app/components/sections/AboutSection";
 import ContactSection from "@/app/components/sections/ContactSection";
+import Footer from "@/app/components/layout/Footer";
 
 export default function HomePage() {
   return (
@@ -13,7 +14,9 @@ export default function HomePage() {
         <MenuSection />
         <AboutSection />
         <ContactSection />
+
       </main>
+      <Footer />
     </>
   );
 }
