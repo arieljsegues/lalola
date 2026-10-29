@@ -46,6 +46,22 @@ const CATEGORY_ORDER = [
   "begudes",
 ];
 
+
+
+const CATEGORY_COMMENTS: Record<string, string> = {
+  pizza: "Pizzes al form de pedra fetes al moment.",
+};
+
+const SUBCATEGORY_COMMENTS: Record<string, string> = {
+  "burger-veggie": "Tots els ingredients vegetals són ecològics, de proximitat i d'alta qualitat. Fes Veggie qualsevol burger nostra de vedella.",
+  "burger-vedella":
+    "Smash burguers fetes amb carn de vedella 100% picada a casa. Inclou ració de patates casolanes. Tot fet al moment. Fes-la doble (+3.00€)",
+    
+    "burger-pollastre": "Hamburguesa de cuixa de pollastre de granja Cal Guiu amb arrebossat cruixent cassolà. Fes-la doble(+2.00€)"
+};
+
+
+
 function normalize(value: string) {
   return value
     .normalize("NFD")
@@ -377,10 +393,20 @@ export default function FullMenu() {
             id={category.id}
             className="full-menu__category"
           >
+
+
             <div className="full-menu__category-heading">
-              <h2>{category.name}</h2>
-              <span className="full-menu__category-line" />
+            <h2>{category.name}</h2>
+            <span className="full-menu__category-line" />
             </div>
+
+            {CATEGORY_COMMENTS[normalize(category.name)] && (
+            <p className="full-menu__comment">
+                {CATEGORY_COMMENTS[normalize(category.name)]}
+            </p>
+            )}
+
+
 
             {category.subcategories.length ? (
               <>
@@ -393,6 +419,12 @@ export default function FullMenu() {
                     <h3 className="full-menu__subcategory-title">
                       {subcategory.name}
                     </h3>
+
+                    {SUBCATEGORY_COMMENTS[subcategory.id] && (
+                    <p className="full-menu__comment">
+                        {SUBCATEGORY_COMMENTS[subcategory.id]}
+                    </p>
+                    )}
 
                     <div className="full-menu__items">
                       {subcategory.items.map((item) => (

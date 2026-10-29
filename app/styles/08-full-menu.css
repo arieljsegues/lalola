@@ -1261,3 +1261,21 @@
   }
 
 }
+
+
+.full-menu__comment {
+  margin: 0.5rem 0 1.25rem;
+  padding: 0.85rem 1rem;
+
+  color: #fff;
+  background: #e6532f;
+
+  border-left: 4px solid #ff9a72;
+  border-radius: 0 10px 10px 0;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+
+  box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+}
