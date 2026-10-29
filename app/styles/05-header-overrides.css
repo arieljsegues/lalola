@@ -1,0 +1,104 @@
+/* AJUSTE DE CABECERA Y MENÚ MÓVIL */
+
+
+
+.site-header {
+
+  position: fixed;
+
+  top: 0;
+
+  right: 0;
+
+  left: 0;
+
+  z-index: 1000;
+
+}
+
+
+
+.site-header__inner {
+
+  position: relative;
+
+}
+
+
+
+.site-header__mobile {
+
+  display: none;
+
+}
+
+
+
+@media (max-width: 767px) {
+
+  .site-header__inner {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+  }
+
+
+
+  .site-header__nav,
+
+  .site-header__order {
+
+    display: none !important;
+
+  }
+
+
+
+  .site-header__mobile {
+
+    display: block !important;
+
+    position: relative;
+
+    margin-left: auto;
+
+  }
+
+
+
+  .mobile-menu {
+
+    display: block;
+
+    position: relative;
+
+  }
+
+
+
+  .mobile-menu__panel {
+
+    position: absolute;
+
+    top: calc(100% + 16px);
+
+    right: 0;
+
+    left: auto;
+
+    width: min(85vw, 340px);
+
+    max-height: calc(100dvh - 110px);
+
+    overflow-y: auto;
+
+  }
+
+}
+

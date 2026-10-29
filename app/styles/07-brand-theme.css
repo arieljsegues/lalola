@@ -1,0 +1,672 @@
+/* ========================================
+
+   IDENTIDAD VISUAL — LA LOLA PIZZERIA
+
+======================================== */
+
+
+
+:root {
+
+  --color-bg: #f8f3e9;
+
+  --color-text: #211a14;
+
+  --color-dark: #292019;
+
+  --color-accent: #f9bc2c;
+
+  --color-white: #f8f8f8;
+
+
+
+  --brand-yellow: #f9bc2c;
+
+  --brand-cream: #f8f3e9;
+
+  --brand-gold: #ac8b45;
+
+  --brand-dark: #292019;
+
+  --brand-text: #211a14;
+
+  --brand-light: #f8f8f8;
+
+}
+
+
+
+/* ========================================
+
+   BOTONES GLOBALES
+
+======================================== */
+
+
+
+.button--primary {
+
+  background: #f9bc2c;
+
+  border-color: #f9bc2c;
+
+  color: #211a14;
+
+}
+
+
+
+.button--primary:hover {
+
+  background: #e5a817;
+
+  border-color: #e5a817;
+
+  color: #211a14;
+
+}
+
+
+
+.button--outline:hover {
+
+  background: #f9bc2c;
+
+  border-color: #f9bc2c;
+
+  color: #211a14;
+
+}
+
+
+
+button:focus-visible,
+
+a:focus-visible {
+
+  outline-color: #f9bc2c;
+
+}
+
+
+
+/* Cabecera */
+
+
+
+.site-header__logo-accent,
+
+.site-header__link:hover {
+
+  color: #f9bc2c;
+
+}
+
+
+
+.mobile-menu__toggle {
+
+  background: #f9bc2c;
+
+  border-color: #f9bc2c;
+
+  color: #211a14;
+
+}
+
+
+
+/* ========================================
+
+   1. HERO
+
+   Se conserva el fondo y la imagen actuales
+
+======================================== */
+
+
+
+.hero__eyebrow,
+
+.hero__title-accent {
+
+  color: #f9bc2c;
+
+}
+
+
+
+/* ========================================
+
+   2. CARTA
+
+   Fondo crema y detalles dorados
+
+======================================== */
+
+
+
+.featured-menu {
+
+  background: #f8f3e9;
+
+  color: #211a14;
+
+}
+
+
+
+.featured-menu__eyebrow,
+
+.featured-card__category,
+
+.featured-card__price,
+
+.featured-menu__link span {
+
+  color: #ac8b45;
+
+}
+
+
+
+.featured-menu__title {
+
+  color: #211a14;
+
+}
+
+
+
+.featured-menu__subtitle,
+
+.featured-card__ingredients,
+
+.featured-card__allergens,
+
+.featured-menu__message {
+
+  color: #746b5d;
+
+}
+
+
+
+.featured-card {
+
+  background: #fffdf8;
+
+  border-color: #e5dac5;
+
+}
+
+
+
+.featured-card__image-wrap,
+
+.featured-card__image-placeholder {
+
+  background: #eee4d2;
+
+}
+
+
+
+.featured-card__number {
+
+  background: #ac8b45;
+
+  color: #fff;
+
+}
+
+
+
+.featured-card__allergens strong {
+
+  color: #211a14;
+
+}
+
+
+
+.featured-menu__link {
+
+  color: #211a14;
+
+}
+
+
+
+/* ========================================
+
+   3. NOSOTROS
+
+   Fondo amarillo y texto oscuro
+
+======================================== */
+
+
+
+.about {
+
+  background: #f9bc2c;
+
+  color: #211a14;
+
+}
+
+
+
+.about__eyebrow,
+
+.about__title span,
+
+.about__signature span {
+
+  color: #292019;
+
+}
+
+
+
+.about__title {
+
+  color: #211a14;
+
+}
+
+
+
+.about__story {
+
+  color: #49371e;
+
+}
+
+
+
+.about__button {
+
+  background: #f9bc2c;
+
+  color: #211a14;
+
+  border: 1px solid #211a14;
+
+}
+
+
+
+.about__button:hover {
+
+  background: #211a14;
+
+  color: #f9bc2c;
+
+}
+
+
+
+.about__signature {
+
+  color: #49371e;
+
+}
+
+
+
+.about__stamp {
+
+  background: #211a14;
+
+  color: #f9bc2c;
+
+  border-color: #211a14;
+
+}
+
+
+
+.about__arrow:hover {
+
+  background: #f9bc2c;
+
+  color: #211a14;
+
+}
+
+
+
+/* ========================================
+
+   4. CONTACTO
+
+   Fondo oscuro y acento amarillo
+
+======================================== */
+
+
+
+.contact {
+
+  background: #292019;
+
+  color: #f8f8f8;
+
+}
+
+
+
+.contact__eyebrow {
+
+  color: #f1b62c;
+
+}
+
+
+
+.contact__title,
+
+.contact__detail-title {
+
+  color: #f8f8f8;
+
+}
+
+
+
+.contact__description,
+
+.contact__detail-value {
+
+  color: rgb(248 248 248 / 78%);
+
+}
+
+
+
+.contact__details,
+
+.contact__footer {
+
+  border-color: rgb(248 248 248 / 18%);
+
+}
+
+
+
+.contact__phone {
+
+  color: #f1b62c;
+
+}
+
+
+
+.contact__phone:hover {
+
+  color: #ffda73;
+
+}
+
+
+
+.contact__detail-extra,
+
+.contact__copyright {
+
+  color: rgb(248 248 248 / 58%);
+
+}
+
+
+
+/* Botón principal de contacto */
+
+
+
+.contact__button--primary {
+
+  background: #f9bc2c;
+
+  border-color: #f9bc2c;
+
+  color: #211a14;
+
+}
+
+
+
+.contact__button--primary:hover {
+
+  background: #f1b62c;
+
+  border-color: #f1b62c;
+
+  color: #211a14;
+
+}
+
+
+
+/* Botón secundario */
+
+
+
+.contact__button--secondary {
+
+  background: transparent;
+
+  border-color: rgb(248 248 248 / 45%);
+
+  color: #f8f8f8;
+
+}
+
+
+
+.contact__button--secondary:hover {
+
+  background: #f9bc2c;
+
+  border-color: #f9bc2c;
+
+  color: #211a14;
+
+}
+
+
+
+.contact__back {
+
+  color: #f8f8f8;
+
+}
+
+
+
+.contact__back:hover {
+
+  color: #f1b62c;
+
+}
+
+
+
+/* Mapa */
+
+
+
+.contact__map {
+
+  background: #211a14;
+
+}
+
+
+
+
+
+
+
+/* Enlace de la sección activa */
+
+.site-header__link {
+
+  position: relative;
+
+  transition: color 0.25s ease;
+
+}
+
+
+
+.site-header__link::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -7px;
+
+  width: 100%;
+
+  height: 2px;
+
+  background-color: #f9bb2e;
+
+  transform: scaleX(0);
+
+  transform-origin: left;
+
+  transition: transform 0.25s ease;
+
+}
+
+
+
+.site-header__link:hover,
+
+.site-header__link--active {
+
+  color: #f9bb2e;
+
+}
+
+
+
+.site-header__link--active::after {
+
+  transform: scaleX(1);
+
+}
+
+
+
+
+
+
+
+/* Posición de llegada al navegar entre secciones */
+
+
+
+#inicio {
+
+  scroll-margin-top: 0px;
+
+}
+
+
+
+#carta {
+
+  scroll-margin-top: -150px;
+
+}
+
+
+
+#nosotros {
+
+  scroll-margin-top: -130px;
+
+}
+
+
+
+#contacto {
+
+  scroll-margin-top: -130px;
+
+}
+
+
+
+
+
+/* Desplazamiento suave */
+
+html {
+
+  scroll-behavior: smooth;
+
+}
+
+
+
+
+
+
+
+/* Logo del Hero */
+
+.hero {
+
+  position: relative;
+
+}
+
+
+
+.hero__logo {
+
+  position: absolute;
+
+  top: 10px;
+
+  left: 40px;
+
+  width: 160px;
+
+  height: auto;
+
+  object-fit: contain;
+
+  z-index: 5;
+
+}
+
+
+
+/* Móvil: logo centrado arriba */
+
+@media (max-width: 767px) {
+
+  .hero__logo {
+
+    top: 90px;
+
+    left: 50%;
+
+    width: min(230px, 65vw);
+
+    transform: translateX(-50%);
+
+  }
+
+}
+

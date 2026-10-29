@@ -1,0 +1,125 @@
+/* =========================
+
+   1. Variables globales
+
+   ========================= */
+
+
+
+:root {
+
+  --color-bg: #faf7f2;
+
+  --color-text: #171717;
+
+  --color-dark: #111111;
+
+  --color-accent: #f97316;
+
+  --color-white: #ffffff;
+
+
+
+  --font-body: Arial, Helvetica, sans-serif;
+
+
+
+  --header-height: 5rem;
+
+  --page-padding: clamp(1.25rem, 5vw, 5rem);
+
+}
+
+
+
+* {
+
+  box-sizing: border-box;
+
+}
+
+
+
+html {
+
+  scroll-behavior: smooth;
+
+  scroll-padding-top: var(--header-height);
+
+}
+
+
+
+body {
+
+  margin: 0;
+
+  font-family: var(--font-body);
+
+  color: var(--color-text);
+
+  background: var(--color-bg);
+
+}
+
+
+
+body,
+
+button,
+
+a {
+
+  -webkit-tap-highlight-color: transparent;
+
+}
+
+
+
+a {
+
+  color: inherit;
+
+  text-decoration: none;
+
+}
+
+
+
+button {
+
+  font: inherit;
+
+}
+
+
+
+button,
+
+a {
+
+  touch-action: manipulation;
+
+}
+
+
+
+button:focus-visible,
+
+a:focus-visible {
+
+  outline: 3px solid var(--color-accent);
+
+  outline-offset: 4px;
+
+}
+
+
+
+img {
+
+  display: block;
+
+  max-width: 100%;
+
+}

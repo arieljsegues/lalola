@@ -1,0 +1,695 @@
+/* HISTORIA: JUANJO Y LOLA */
+
+
+
+.about {
+
+  min-height: 100vh;
+
+  min-height: 100svh;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 100px 6%;
+
+  background: #fff;
+
+  color: #211d19;
+
+  scroll-margin-top: 0;
+
+}
+
+
+
+.about__inner {
+
+  display: grid;
+
+  grid-template-columns: 1fr 0.9fr;
+
+  align-items: center;
+
+  gap: clamp(40px, 7vw, 100px);
+
+  width: 100%;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+}
+
+
+
+.about__copy {
+
+  max-width: 600px;
+
+}
+
+
+
+.about__eyebrow {
+
+  margin-bottom: 22px;
+
+  color: #e65b22;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.22em;
+
+  text-transform: uppercase;
+
+}
+
+
+
+.about__title {
+
+  margin: 0;
+
+  font-size: clamp(38px, 4.5vw, 64px);
+
+  line-height: 1.04;
+
+  font-weight: 900;
+
+  letter-spacing: -0.055em;
+
+}
+
+
+
+.about__title span {
+
+  color: #e65b22;
+
+}
+
+
+
+.about__story {
+
+  margin-top: 28px;
+
+  color: #6e675f;
+
+  font-size: 15px;
+
+  line-height: 1.9;
+
+}
+
+
+
+.about__story p + p {
+
+  margin-top: 16px;
+
+}
+
+
+
+.about__button {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 30px;
+
+  padding: 15px 23px;
+
+  border-radius: 999px;
+
+  background: #211d19;
+
+  color: #fff;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+  transition: background 200ms ease, transform 200ms ease;
+
+}
+
+
+
+.about__button:hover {
+
+  background: #e65b22;
+
+  transform: translateY(-2px);
+
+}
+
+
+
+.about__button span {
+
+  font-size: 18px;
+
+}
+
+
+
+.about__signature {
+
+  margin-top: 24px;
+
+  color: #8b8177;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
+
+}
+
+
+
+.about__signature span {
+
+  padding: 0 5px;
+
+  color: #e65b22;
+
+}
+
+
+
+.about__visual {
+
+  position: relative;
+
+  width: 100%;
+
+  max-width: 550px;
+
+  margin: 0 auto;
+
+}
+
+
+
+.about__carousel {
+
+  position: relative;
+
+  overflow: hidden;
+
+  aspect-ratio: 4 / 5;
+
+  border-radius: 24px;
+
+  background: #f2e8dc;
+
+}
+
+
+
+.about__slide {
+
+  position: absolute;
+
+  inset: 0;
+
+  visibility: hidden;
+
+  opacity: 0;
+
+  transition: opacity 350ms ease, visibility 350ms ease;
+
+}
+
+
+
+.about__slide.is-active {
+
+  z-index: 1;
+
+  visibility: visible;
+
+  opacity: 1;
+
+}
+
+
+
+.about__image {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+
+.about__slide::after {
+
+  position: absolute;
+
+  inset: 45% 0 0;
+
+  background: linear-gradient(transparent, rgb(0 0 0 / 65%));
+
+  content: "";
+
+  pointer-events: none;
+
+}
+
+
+
+.about__image-caption {
+
+  position: absolute;
+
+  z-index: 2;
+
+  right: 25px;
+
+  bottom: 82px;
+
+  left: 25px;
+
+  color: #fff;
+
+}
+
+
+
+.about__image-caption span {
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.2em;
+
+}
+
+
+
+.about__image-caption p {
+
+  margin-top: 7px;
+
+  font-size: clamp(22px, 2.5vw, 32px);
+
+  font-weight: 800;
+
+  line-height: 1.15;
+
+}
+
+
+
+.about__controls {
+
+  position: absolute;
+
+  z-index: 3;
+
+  right: 22px;
+
+  bottom: 20px;
+
+  left: 22px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+}
+
+
+
+.about__dots {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+}
+
+
+
+.about__dot {
+
+  width: 8px;
+
+  height: 8px;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: rgb(255 255 255 / 55%);
+
+  cursor: pointer;
+
+  transition: width 200ms ease, background 200ms ease;
+
+}
+
+
+
+.about__dot.is-active {
+
+  width: 25px;
+
+  border-radius: 8px;
+
+  background: #fff;
+
+}
+
+
+
+.about__arrows {
+
+  display: flex;
+
+  gap: 8px;
+
+}
+
+
+
+.about__arrow {
+
+  display: grid;
+
+  width: 38px;
+
+  height: 38px;
+
+  place-items: center;
+
+  border: 1px solid rgb(255 255 255 / 65%);
+
+  border-radius: 50%;
+
+  background: rgb(0 0 0 / 15%);
+
+  color: #fff;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition: background 200ms ease;
+
+}
+
+
+
+.about__arrow:hover {
+
+  background: #e65b22;
+
+}
+
+
+
+.about__stamp {
+
+  position: absolute;
+
+  top: 35px;
+
+  right: -28px;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 105px;
+
+  height: 105px;
+
+  border: 1px solid #fff;
+
+  border-radius: 50%;
+
+  background: #e65b22;
+
+  color: #fff;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  line-height: 1.7;
+
+  text-align: center;
+
+  transform: rotate(9deg);
+
+}
+
+
+
+/* TABLET */
+
+
+
+@media (max-width: 900px) {
+
+  .about {
+
+    padding: 100px 5%;
+
+  }
+
+
+
+  .about__inner {
+
+    grid-template-columns: 1fr 0.85fr;
+
+    gap: 32px;
+
+  }
+
+
+
+  .about__story {
+
+    font-size: 14px;
+
+    line-height: 1.75;
+
+  }
+
+
+
+  .about__stamp {
+
+    right: -12px;
+
+    width: 82px;
+
+    height: 82px;
+
+    font-size: 8px;
+
+  }
+
+}
+
+
+
+/* MÓVIL */
+
+
+
+@media (max-width: 650px) {
+
+  .about {
+
+    min-height: 100svh;
+
+    padding: 90px 22px 48px;
+
+  }
+
+
+
+  .about__inner {
+
+    grid-template-columns: 1fr;
+
+    gap: 32px;
+
+  }
+
+
+
+  .about__eyebrow {
+
+    margin-bottom: 15px;
+
+    font-size: 10px;
+
+  }
+
+
+
+  .about__title {
+
+    font-size: clamp(36px, 10vw, 48px);
+
+  }
+
+
+
+  .about__story {
+
+    margin-top: 20px;
+
+    font-size: 14px;
+
+    line-height: 1.75;
+
+  }
+
+
+
+  .about__story p + p {
+
+    margin-top: 12px;
+
+  }
+
+
+
+  .about__button {
+
+    margin-top: 22px;
+
+  }
+
+
+
+  .about__signature {
+
+    margin-top: 16px;
+
+  }
+
+
+
+  .about__visual {
+
+    max-width: 430px;
+
+  }
+
+
+
+  .about__carousel {
+
+    aspect-ratio: 5 / 4;
+
+    border-radius: 18px;
+
+  }
+
+
+
+  .about__image-caption {
+
+    right: 18px;
+
+    bottom: 75px;
+
+    left: 18px;
+
+  }
+
+
+
+  .about__image-caption p {
+
+    font-size: 24px;
+
+  }
+
+
+
+  .about__controls {
+
+    right: 16px;
+
+    bottom: 15px;
+
+    left: 16px;
+
+  }
+
+
+
+  .about__stamp {
+
+    top: -18px;
+
+    right: -8px;
+
+    width: 75px;
+
+    height: 75px;
+
+  }
+
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  .about__slide,
+
+  .about__button,
+
+  .about__dot,
+
+  .about__arrow {
+
+    transition: none;
+
+  }
+
+}

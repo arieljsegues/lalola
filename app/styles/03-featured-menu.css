@@ -1,0 +1,577 @@
+/* CARTA DESTACADA */
+
+
+
+.featured-menu {
+
+  min-height: 100vh;
+
+  min-height: 100svh;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 100px var(--page-padding, 5%);
+
+  background: #faf7f2;
+
+  color: #201c18;
+
+  scroll-margin-top: 0;
+
+}
+
+
+
+.featured-menu__inner {
+
+  width: 100%;
+
+  max-width: 1440px;
+
+  margin-inline: auto;
+
+}
+
+
+
+.featured-menu__header {
+
+  text-align: center;
+
+  margin-bottom: 38px;
+
+}
+
+
+
+.featured-menu__eyebrow {
+
+  margin-bottom: 12px;
+
+  color: #e65b22;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.22em;
+
+  text-transform: uppercase;
+
+}
+
+
+
+.featured-menu__title {
+
+  margin: 0;
+
+  font-size: clamp(28px, 4vw, 48px);
+
+  line-height: 1.05;
+
+  font-weight: 900;
+
+  letter-spacing: -0.045em;
+
+}
+
+
+
+.featured-menu__subtitle {
+
+  margin-top: 12px;
+
+  color: #746c63;
+
+  font-size: 15px;
+
+}
+
+
+
+.featured-menu__grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 20px;
+
+}
+
+
+
+.featured-card {
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  background: #fff;
+
+  border: 1px solid #e9e2d9;
+
+  border-radius: 18px;
+
+  transition: transform 220ms ease, box-shadow 220ms ease;
+
+}
+
+
+
+.featured-card:hover {
+
+  transform: translateY(-5px);
+
+  box-shadow: 0 14px 32px rgb(45 30 15 / 10%);
+
+}
+
+
+
+.featured-card__image-wrap {
+
+  position: relative;
+
+  overflow: hidden;
+
+  aspect-ratio: 4 / 3;
+
+  background: #e9e0d5;
+
+}
+
+
+
+.featured-card__image {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 350ms ease;
+
+}
+
+
+
+.featured-card:hover .featured-card__image {
+
+  transform: scale(1.045);
+
+}
+
+
+
+.featured-card__image-placeholder {
+
+  display: grid;
+
+  width: 100%;
+
+  height: 100%;
+
+  place-items: center;
+
+  padding: 12px;
+
+  color: #746c63;
+
+  font-size: 13px;
+
+  text-align: center;
+
+}
+
+
+
+.featured-card__number {
+
+  position: absolute;
+
+  top: 12px;
+
+  left: 12px;
+
+  display: grid;
+
+  width: 36px;
+
+  height: 36px;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  color: #201c18;
+
+  font-size: 12px;
+
+  font-weight: 900;
+
+}
+
+
+
+.featured-card__content {
+
+  padding: 20px;
+
+}
+
+
+
+.featured-card__category {
+
+  margin-bottom: 8px;
+
+  color: #e65b22;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+
+}
+
+
+
+.featured-card__title-row {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+}
+
+
+
+.featured-card__title {
+
+  margin: 0;
+
+  font-size: 19px;
+
+  line-height: 1.25;
+
+  font-weight: 800;
+
+}
+
+
+
+.featured-card__price {
+
+  flex-shrink: 0;
+
+  color: #e65b22;
+
+  font-size: 16px;
+
+  font-weight: 900;
+
+}
+
+
+
+.featured-card__ingredients {
+
+  margin-top: 12px;
+
+  color: #746c63;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+}
+
+
+
+.featured-card__allergens {
+
+  margin-top: 12px;
+
+  color: #746c63;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+}
+
+
+
+.featured-card__allergens strong {
+
+  color: #38312b;
+
+}
+
+
+
+.featured-menu__link {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 32px auto 0;
+
+  color: #201c18;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+}
+
+
+
+.featured-menu__link span {
+
+  color: #e65b22;
+
+  font-size: 20px;
+
+}
+
+
+
+.featured-menu__message {
+
+  padding: 32px 0;
+
+  color: #746c63;
+
+  text-align: center;
+
+}
+
+
+
+/* TABLET */
+
+
+
+@media (max-width: 1000px) {
+
+  .featured-menu {
+
+    padding: 100px 5%;
+
+  }
+
+
+
+  .featured-menu__grid {
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+  }
+
+
+
+  .featured-card__image-wrap {
+
+    aspect-ratio: 16 / 10;
+
+  }
+
+}
+
+
+
+/* MÓVIL */
+
+
+
+@media (max-width: 560px) {
+
+  .featured-menu {
+
+    padding: 90px 16px 36px;
+
+  }
+
+
+
+  .featured-menu__header {
+
+    margin-bottom: 24px;
+
+  }
+
+
+
+  .featured-menu__title {
+
+    font-size: 29px;
+
+  }
+
+
+
+  .featured-menu__subtitle {
+
+    font-size: 13px;
+
+  }
+
+
+
+  .featured-menu__grid {
+
+    gap: 12px;
+
+  }
+
+
+
+  .featured-card {
+
+    border-radius: 13px;
+
+  }
+
+
+
+  .featured-card__image-wrap {
+
+    aspect-ratio: 1 / 0.82;
+
+  }
+
+
+
+  .featured-card__number {
+
+    top: 7px;
+
+    left: 7px;
+
+    width: 27px;
+
+    height: 27px;
+
+    font-size: 10px;
+
+  }
+
+
+
+  .featured-card__content {
+
+    padding: 11px;
+
+  }
+
+
+
+  .featured-card__category {
+
+    font-size: 9px;
+
+    letter-spacing: 0.08em;
+
+  }
+
+
+
+  .featured-card__title-row {
+
+    flex-direction: column;
+
+    gap: 5px;
+
+  }
+
+
+
+  .featured-card__title {
+
+    font-size: 15px;
+
+  }
+
+
+
+  .featured-card__price {
+
+    font-size: 14px;
+
+  }
+
+
+
+  .featured-card__ingredients {
+
+    margin-top: 8px;
+
+    font-size: 11px;
+
+    line-height: 1.4;
+
+  }
+
+
+
+  .featured-card__allergens {
+
+    margin-top: 8px;
+
+    font-size: 10px;
+
+  }
+
+
+
+  .featured-menu__link {
+
+    margin-top: 24px;
+
+    font-size: 12px;
+
+  }
+
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  .featured-card,
+
+  .featured-card__image {
+
+    transition: none;
+
+  }
+
+}
