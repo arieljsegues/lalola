@@ -1,8 +1,8 @@
-import SiteHeader from "@/components/layout/SiteHeader";
-import Hero from "@/components/sections/Hero";
-import MenuSection from "@/components/sections/MenuSection";
-import AboutSection from "@/components/sections/AboutSection";
-import ContactSection from "@/components/sections/ContactSection";
+import SiteHeader from "@/app/components/layout/SiteHeader";
+import Hero from "@/app/components/sections/Hero";
+import MenuSection from "@/app/components/sections/MenuSection";
+import AboutSection from "@/app/components/sections/AboutSection";
+import ContactSection from "@/app/components/sections/ContactSection";
 
 export default function HomePage() {
   return (
