@@ -89,13 +89,7 @@ export default function SiteHeader() {
           ))}
         </nav>
 
-        <a
-          href="#carta"
-          className="button button--primary site-header__order"
-          onClick={() => setActiveSection("#carta")}
-        >
-          Realizar un pedido
-        </a>
+
 
         <div className="site-header__mobile">
           <MobileMenu links={links} />

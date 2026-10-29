@@ -133,7 +133,7 @@ export default function MenuSection() {
             <a href="#contacto" className="featured-menu__link">
             ¿Se te ha abierto el apetito? Encuéntranos <span aria-hidden="true">↗</span>
             </a>
-            <a href="/carta" className="featured-menu__link">
+            <a href="/lalola/carta" className="featured-menu__link">
             Ver la carta completa <span aria-hidden="true">↗</span>
             </a>
       </div>
