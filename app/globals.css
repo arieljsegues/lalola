@@ -212,7 +212,7 @@ img {
 
   color: var(--color-white);
   background-color: var(--color-dark);
-  background-image: url("/images/hero.png");
+  background-image: url("/lalola/images/hero.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

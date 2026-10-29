@@ -4,7 +4,7 @@ export default function Hero() {
     <section id="inicio" className="hero">
         
         <img
-        src="/images/logo.png"
+        src="/lalola/images/logo.png"
         alt="La Lola"
         className="hero__logo"
         />
@@ -35,7 +35,7 @@ export default function Hero() {
             Ver la carta <span aria-hidden="true">→</span>
           </a>*/}
 
-          <a href="/carta" className="button button--primary">
+          <a href="/lalola/carta" className="button button--primary">
             Ver la carta <span aria-hidden="true">→</span>
           </a>
         </div>
