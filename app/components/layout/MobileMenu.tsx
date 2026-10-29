@@ -48,11 +48,11 @@ export default function MobileMenu({
           ))}
 
           <a
-            href="#carta"
+            href="/lalola/carta"
             className="button button--primary mobile-menu__order"
             onClick={() => setIsOpen(false)}
           >
-            Realizar un pedido →
+            Ver toda la carta →
           </a>
         </nav>
       )}
