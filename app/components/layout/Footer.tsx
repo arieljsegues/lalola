@@ -59,7 +59,7 @@ export default function Footer() {
             >
               <path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5z" />
             </svg>
-            ¡Deja tu reseña!
+            Deixa la teva resenya!
           </a>
         </div>
 
@@ -67,11 +67,11 @@ export default function Footer() {
 
         <div className="site-footer__bottom">
           <p>
-            © {currentYear} La Lola. Todos los derechos reservados.
+            © {currentYear} La Lola. Tots els drets reservats.
           </p>
 
           <a href="#inicio" className="site-footer__top">
-            Volver arriba ↑
+            Tornar amunt ↑
           </a>
         </div>
       </div>

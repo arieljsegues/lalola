@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import MobileMenu from "./MobileMenu";
 
 const links = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Destacados", href: "#carta" },
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Inici", href: "#inicio" },
+  { label: "Destacats", href: "#carta" },
+  { label: "Contacte", href: "#contacto" },
 ];
 
 export default function SiteHeader() {

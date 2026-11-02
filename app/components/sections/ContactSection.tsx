@@ -2,12 +2,17 @@
 const contactDetails = [
 
   {
-    title: "Horario",
-    value: "De miércoles a domingo",
+    title: "Horari",
+    value: "De dimecres a diumenge",
     extra: "20:00 – 23:00",
   },
   {
-    title: "Reservas",
+    title: "Direcció",
+    value: "Carrer de Llorenç Tomàs i Costa, 8",
+    extra: "La Seu d'Urgell, Lleida  25700",
+  },
+  {
+    title: "Reserves",
     value: "+34 648 80 41 05",
   },
 ];
@@ -24,9 +29,9 @@ export default function ContactSection() {
     <section id="contacto" className="contact">
       <div className="contact__inner">
         <div className="contact__header">
-          <p className="contact__eyebrow">Estamos aquí</p>
+          <p className="contact__eyebrow">Som aquí</p>
 
-          <h2 className="contact__title">Ven a vernos</h2>
+          <h2 className="contact__title">Per venir a sopar i fer comandes som a:</h2>
 
         </div>
 
@@ -64,7 +69,7 @@ export default function ContactSection() {
                 href="tel:+34648804105"
                 className="contact__button contact__button--primary"
               >
-                Llámanos para reservar
+                Trúcans per a reservar
               </a>
 
               <a
@@ -73,7 +78,7 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
                 className="contact__button contact__button--secondary"
               >
-                Cómo llegar ↗
+                Com arribar ↗
               </a>
             </div>
           </div>

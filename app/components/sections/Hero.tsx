@@ -11,19 +11,19 @@ export default function Hero() {
 
       <div className="hero__inner">
         <p className="hero__eyebrow">
-          Hecho para disfrutar
+          Restaurant Pizzeria a la Seu d'Urgell
         </p>
 
         <h1 className="hero__title">
           Pizza, Burgers
           <br />
           <span className="hero__title-accent">
-            y mucho más
+            i molta Lola
           </span>
         </h1>
 
         <p className="hero__description">
-          Tus favoritos, recién hechos y listos para disfrutar.
+          Per prendre al local, recollir o a domicili *2€, divendres i dissabtes només recollir.
         </p>
 
         <div className="hero__actions">
@@ -36,7 +36,7 @@ export default function Hero() {
           </a>*/}
 
           <a href="/lalola/carta" className="button button--primary">
-            Ver la carta <span aria-hidden="true">→</span>
+            Veure la carta <span aria-hidden="true">→</span>
           </a>
         </div>
       </div>
@@ -46,7 +46,7 @@ export default function Hero() {
         className="hero__scroll"
         aria-label="Desplazarse hasta la carta"
       >
-        <span className="hero__scroll-label">Descubre</span>
+        <span className="hero__scroll-label">Descobreix</span>
         <span className="hero__scroll-arrow" aria-hidden="true">
           ↓
         </span>

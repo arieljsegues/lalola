@@ -14,6 +14,14 @@ type MenuItem = {
   image_url: string | null;
 };
 
+// Platos destacados en el orden exacto de aparición
+const FEATURED_MENU_IDS = [
+  "5bbde831-c5b6-49c5-a525-332045a41df9",
+  "3c23df32-8f54-4920-8f05-56cb929c9526",
+  "92f5e927-29b6-4fd1-bd8b-c14a8595012b",
+   "1c5f53b7-4829-4b7f-9e3d-c6de03ca403e",
+];
+
 const euro = new Intl.NumberFormat("es-ES", {
   style: "currency",
   currency: "EUR",
@@ -32,15 +40,23 @@ export default function MenuSection() {
           "id, name, ingredients, price, category, allergens, image_url"
         )
         .eq("is_available", true)
-        .eq("is_featured", true)
-        .order("sort_order", { ascending: true })
-        .limit(4);
+        .in("id", FEATURED_MENU_IDS);
 
       if (error) {
         console.error("Error al cargar los platos destacados:", error);
         setError(true);
       } else {
-        setItems((data ?? []) as MenuItem[]);
+        // Asociar cada plato a su ID
+        const itemsById = new Map(
+          (data ?? []).map((item) => [item.id, item])
+        );
+
+        // Reconstruir la lista siguiendo el orden de FEATURED_MENU_IDS
+        const orderedItems = FEATURED_MENU_IDS
+          .map((id) => itemsById.get(id))
+          .filter((item): item is MenuItem => item !== undefined);
+
+        setItems(orderedItems);
       }
 
       setLoading(false);
@@ -52,32 +68,32 @@ export default function MenuSection() {
   return (
     <section id="carta" className="featured-menu">
       <div className="featured-menu__inner">
+
         <header className="featured-menu__header">
           <p className="featured-menu__eyebrow">
-            Los favoritos de la Lola
+            Els preferits de la Lola
           </p>
 
           <h2 className="featured-menu__title">
-            IMPOSIBLE ELEGIR SOLO UNO
+            IMPOSSIBLE ESCOLLIR-NE NOMÉS UN
           </h2>
-
         </header>
 
         {loading && (
           <p className="featured-menu__message">
-            Cargando nuestros favoritos...
+            Carregant els nostres preferits...
           </p>
         )}
 
         {error && (
           <p className="featured-menu__message" role="alert">
-            No se han podido cargar los platos. Inténtalo de nuevo más tarde.
+            No s'ha pogut carregar els plats. Intenta-ho de nou més endavant.
           </p>
         )}
 
         {!loading && !error && items.length === 0 && (
           <p className="featured-menu__message">
-            Estamos preparando nuestros favoritos. ¡Muy pronto!
+            Estamos preparant els nostres preferits. Ven aviat!
           </p>
         )}
 
@@ -95,7 +111,7 @@ export default function MenuSection() {
                     />
                   ) : (
                     <div className="featured-card__image-placeholder">
-                      Fotografía próximamente
+                      Fotografia properament
                     </div>
                   )}
 
@@ -122,20 +138,22 @@ export default function MenuSection() {
                   <p className="featured-card__ingredients">
                     {item.ingredients}
                   </p>
-
-
                 </div>
               </article>
             ))}
           </div>
         )}
 
-            <a href="#contacto" className="featured-menu__link">
-            ¿Se te ha abierto el apetito? Encuéntranos <span aria-hidden="true">↗</span>
-            </a>
-            <a href="/lalola/carta" className="featured-menu__link">
-            Ver la carta completa <span aria-hidden="true">↗</span>
-            </a>
+        <a href="#contacto" className="featured-menu__link">
+          Se t'ha obert la gana? Troba'ns{" "}
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <a href="/lalola/carta" className="featured-menu__link">
+          Veure la carta completa{" "}
+          <span aria-hidden="true">↗</span>
+        </a>
+
       </div>
     </section>
   );
