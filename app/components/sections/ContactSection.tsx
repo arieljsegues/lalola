@@ -69,7 +69,7 @@ export default function ContactSection() {
                 href="tel:+34648804105"
                 className="contact__button contact__button--primary"
               >
-                Trúcans per a reservar
+                Trúcans per a reservar o fer una comanda
               </a>
 
               <a

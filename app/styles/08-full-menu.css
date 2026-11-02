@@ -1279,3 +1279,16 @@
 
   box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
 }
+
+
+.full-menu__comment-outline {
+  color: #e87524;
+  background: #fffaf5;
+  border: 1px solid #e87524;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}

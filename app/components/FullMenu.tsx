@@ -50,16 +50,22 @@ const CATEGORY_ORDER = [
 
 const CATEGORY_COMMENTS: Record<string, string> = {
   pizza: "Pizzes al form de pedra fetes al moment.",
+  postres: "Només per gaudir al restaurant. No fem comandes ni take away ni domicili.",
 };
 
 const SUBCATEGORY_COMMENTS: Record<string, string> = {
   "burger-veggie": "Tots els ingredients vegetals són ecològics, de proximitat i d'alta qualitat. Fes Veggie qualsevol burger nostra de vedella.",
+  
   "burger-vedella":
-    "Smash burguers fetes amb carn de vedella 100% picada a casa. Inclou ració de patates casolanes. Tot fet al moment. Fes-la doble (+3.00€)",
+    "Smash burguers fetes amb carn de vedella 100% picada a casa. Inclou ració de patates casolanes. Tot fet al moment.",
     
-    "burger-pollastre": "Hamburguesa de cuixa de pollastre de granja Cal Guiu amb arrebossat cruixent cassolà. Fes-la doble(+2.00€)"
+    "burger-pollastre": "Hamburguesa de cuixa de pollastre de granja Cal Guiu amb arrebossat cruixent cassolà. Inclou ració de patates casolanes."
 };
 
+const SUBCATEGORY_EXTRA_COMMENTS: Record<string, string> = {
+  "burger-vedella": "Fes-la doble (+3.00€)",
+  "burger-pollastre": "Fes-la doble (+2.00€)",
+}
 
 
 function normalize(value: string) {
@@ -419,12 +425,17 @@ export default function FullMenu() {
                     <h3 className="full-menu__subcategory-title">
                       {subcategory.name}
                     </h3>
+                      {SUBCATEGORY_COMMENTS[subcategory.id] && (
+                        <>
+                          <p className="full-menu__comment">
+                            {SUBCATEGORY_COMMENTS[subcategory.id]}
+                          </p>
 
-                    {SUBCATEGORY_COMMENTS[subcategory.id] && (
-                    <p className="full-menu__comment">
-                        {SUBCATEGORY_COMMENTS[subcategory.id]}
-                    </p>
-                    )}
+                          <p className="full-menu__comment-outline">
+                            {SUBCATEGORY_EXTRA_COMMENTS[subcategory.id]}
+                          </p>
+                        </>
+                      )}
 
                     <div className="full-menu__items">
                       {subcategory.items.map((item) => (
