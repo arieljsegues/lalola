@@ -7,6 +7,7 @@ const links = [
   { label: "Inici", href: "#inicio" },
   { label: "Destacats", href: "#carta" },
   { label: "Contacte", href: "#contacto" },
+  { label: "Carta", href: "/lalola/carta/" },
 ];
 
 export default function SiteHeader() {
@@ -14,6 +15,7 @@ export default function SiteHeader() {
 
   useEffect(() => {
     const sections = links
+      .filter((link) => link.href.startsWith("#"))
       .map((link) => document.querySelector(link.href))
       .filter((section): section is Element => section !== null);
 

@@ -1,8 +1,8 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/app/lib/supabase/client";
+import { useCart } from "@/app/components/cart/CartProvider";
 
 type MenuItem = {
   id: string;
@@ -19,7 +19,7 @@ const FEATURED_MENU_IDS = [
   "5bbde831-c5b6-49c5-a525-332045a41df9",
   "3c23df32-8f54-4920-8f05-56cb929c9526",
   "92f5e927-29b6-4fd1-bd8b-c14a8595012b",
-   "1c5f53b7-4829-4b7f-9e3d-c6de03ca403e",
+  "1c5f53b7-4829-4b7f-9e3d-c6de03ca403e",
 ];
 
 const euro = new Intl.NumberFormat("es-ES", {
@@ -31,6 +31,8 @@ export default function MenuSection() {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const { addItem } = useCart();
 
   useEffect(() => {
     async function loadMenu() {
@@ -51,7 +53,7 @@ export default function MenuSection() {
           (data ?? []).map((item) => [item.id, item])
         );
 
-        // Reconstruir la lista siguiendo el orden de FEATURED_MENU_IDS
+        // Reconstruir la lista siguiendo el orden establecido
         const orderedItems = FEATURED_MENU_IDS
           .map((id) => itemsById.get(id))
           .filter((item): item is MenuItem => item !== undefined);
@@ -64,6 +66,14 @@ export default function MenuSection() {
 
     void loadMenu();
   }, []);
+
+  function handleAddToCart(item: MenuItem) {
+    addItem({
+      id: item.id,
+      name: item.name,
+      price: Number(item.price),
+    });
+  }
 
   return (
     <section id="carta" className="featured-menu">
@@ -87,13 +97,13 @@ export default function MenuSection() {
 
         {error && (
           <p className="featured-menu__message" role="alert">
-            No s'ha pogut carregar els plats. Intenta-ho de nou més endavant.
+            No s&apos;ha pogut carregar els plats. Intenta-ho de nou més endavant.
           </p>
         )}
 
         {!loading && !error && items.length === 0 && (
           <p className="featured-menu__message">
-            Estamos preparant els nostres preferits. Ven aviat!
+            Estem preparant els nostres preferits. Vine aviat!
           </p>
         )}
 
@@ -138,6 +148,15 @@ export default function MenuSection() {
                   <p className="featured-card__ingredients">
                     {item.ingredients}
                   </p>
+
+                  <button
+                    type="button"
+                    className="featured-card__add-button"
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    <span>Afegir a la cistella</span>
+                    <span aria-hidden="true">+</span>
+                  </button>
                 </div>
               </article>
             ))}
@@ -145,7 +164,7 @@ export default function MenuSection() {
         )}
 
         <a href="#contacto" className="featured-menu__link">
-          Se t'ha obert la gana? Troba'ns{" "}
+          Se t&apos;ha obert la gana? Troba&apos;ns{" "}
           <span aria-hidden="true">↗</span>
         </a>
 

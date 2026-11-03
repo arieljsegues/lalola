@@ -1292,3 +1292,13 @@
   font-size: 0.9rem;
   line-height: 1.5;
 }
+.full-menu__brand {
+  display: inline-block;
+  line-height: 0; /* Evita espacios no deseados debajo de la imagen */
+}
+
+.full-menu__brand img {
+  height: 60px; /* Ajusta la altura según la barra de navegación */
+  width: auto;
+  display: block;
+}

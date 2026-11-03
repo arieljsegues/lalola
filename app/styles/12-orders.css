@@ -1,0 +1,217 @@
+/* =========================
+   Carrito flotante La Lola
+   ========================= */
+
+.cart-button {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 900;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  min-height: 3.5rem;
+  padding: 0.85rem 1.25rem;
+
+  border: 0;
+  border-radius: 999px;
+
+  color: #fff;
+  background: var(--color-accent, #f97316);
+
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-decoration: none;
+
+  box-shadow: 0 8px 28px rgb(0 0 0 / 22%);
+
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.cart-button:hover {
+  transform: translateY(-3px);
+  background: #ea580c;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 26%);
+}
+
+.cart-button__icon {
+  font-size: 1.2rem;
+}
+
+.cart-button__count {
+  display: grid;
+  place-items: center;
+
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding-inline: 0.35rem;
+
+  border-radius: 50%;
+  color: #ea580c;
+  background: #fff;
+
+  font-size: 0.75rem;
+}
+
+.cart-button__total {
+  padding-left: 0.75rem;
+  border-left: 1px solid rgb(255 255 255 / 35%);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .cart-button {
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-button {
+    transition: none;
+  }
+}
+
+/* =========================
+   Botones de la carta
+   ========================= */
+
+.full-menu__item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.full-menu__add {
+  min-height: 2.5rem;
+  padding: 0.6rem 1.1rem;
+
+  border: 0;
+  border-radius: 999px;
+
+  color: #fff;
+  background: var(--color-accent, #f97316);
+
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.full-menu__add:hover {
+  background: #ea580c;
+  transform: translateY(-2px);
+}
+
+.full-menu__only-local {
+  color: #98745d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* =========================
+   Responsive: productos de la carta
+   ========================= */
+
+.full-menu__item {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.full-menu__item-main {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.full-menu__item-name,
+.full-menu__ingredients,
+.full-menu__allergens {
+  overflow-wrap: anywhere;
+}
+
+.full-menu__item-actions {
+  min-width: 0;
+  flex: 0 0 auto;
+  max-width: 42%;
+}
+
+.full-menu__add {
+  max-width: 100%;
+  padding: 0.55rem 0.85rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .full-menu__item {
+    gap: 0.65rem;
+    align-items: center;
+  }
+
+  .full-menu__item-actions {
+    max-width: 115px;
+  }
+
+  .full-menu__add {
+    min-height: 2.25rem;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.76rem;
+  }
+
+  .full-menu__price {
+    font-size: 0.9rem;
+  }
+
+  .full-menu__only-local {
+    font-size: 0.68rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .full-menu__item-actions {
+    max-width: 95px;
+  }
+
+  .full-menu__add {
+    padding-inline: 0.55rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Estilo base del botón */
+.cart-button {
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Animación de pulso/rebote al añadir un producto */
+.cart-button--bounce {
+  animation: cartPulse 0.3s ease-in-out;
+}
+
+@keyframes cartPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08); /* Se agranda un 8% */
+  }
+  100% {
+    transform: scale(1);
+  }
+}

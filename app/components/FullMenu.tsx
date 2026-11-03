@@ -1,6 +1,6 @@
 
 "use client";
-
+import { useCart } from "./cart/CartProvider"
 import {
   useEffect,
   useMemo,
@@ -50,7 +50,6 @@ const CATEGORY_ORDER = [
 
 const CATEGORY_COMMENTS: Record<string, string> = {
   pizza: "Pizzes al form de pedra fetes al moment.",
-  postres: "Només per gaudir al restaurant. No fem comandes ni take away ni domicili.",
 };
 
 const SUBCATEGORY_COMMENTS: Record<string, string> = {
@@ -111,7 +110,18 @@ export default function FullMenu() {
   const [error, setError] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
   const [activeSubcategory, setActiveSubcategory] = useState("");
+  const { addItem } = useCart();
 
+  function handleAddToCart(item: MenuItem) {
+    // Los postres son exclusivos del restaurante.
+    if (normalize(item.category) === "postres") return;
+
+    addItem({
+      id: item.id,
+      name: item.name,
+      price: Number(item.price),
+    });
+  }
   const categories = useMemo<MenuCategory[]>(() => {
     const categoryNames = [
       ...new Set(
@@ -307,7 +317,7 @@ export default function FullMenu() {
     return (
       <main className="full-menu">
         <div className="full-menu__status" role="status">
-          Preparando nuestra carta…
+          Preparant la nostra carta…
         </div>
       </main>
     );
@@ -333,10 +343,12 @@ export default function FullMenu() {
       className="full-menu__back"
       onClick={goBack}
     >
-      <span aria-hidden="true">←</span> Volver
+      <span aria-hidden="true">←</span> Tornar enrere
     </button>
 
-    <span className="full-menu__brand">La Lola</span>
+    <a href="/lalola" className="full-menu__brand">
+      <img src="/lalola/images/logo.png" alt="La Lola" />
+    </a>
 
     <span className="full-menu__header-spacer" aria-hidden="true" />
   </div>
@@ -462,9 +474,27 @@ export default function FullMenu() {
                             ) : null}
                           </div>
 
-                          <p className="full-menu__price">
-                            {formatPrice(Number(item.price))}
-                          </p>
+<div className="full-menu__item-actions">
+  <p className="full-menu__price">
+    {formatPrice(Number(item.price))}
+  </p>
+
+  {normalize(item.category) !== "postres" && (
+    <button
+      type="button"
+      className="full-menu__add"
+      onClick={() => handleAddToCart(item)}
+    >
+      + Afegir
+    </button>
+  )}
+
+  {normalize(item.category) === "postres" && (
+    <span className="full-menu__only-local">
+      Només al restaurant
+    </span>
+  )}
+</div>
                         </article>
                       ))}
                     </div>
@@ -496,9 +526,27 @@ export default function FullMenu() {
                               </p>
                             ) : null}
                           </div>
-                          <p className="full-menu__price">
-                            {formatPrice(Number(item.price))}
-                          </p>
+<div className="full-menu__item-actions">
+  <p className="full-menu__price">
+    {formatPrice(Number(item.price))}
+  </p>
+
+  {normalize(item.category) !== "postres" && (
+    <button
+      type="button"
+      className="full-menu__add"
+      onClick={() => handleAddToCart(item)}
+    >
+      + Afegir
+    </button>
+  )}
+
+  {normalize(item.category) === "postres" && (
+    <span className="full-menu__only-local">
+      Només al restaurant
+    </span>
+  )}
+</div>
                         </article>
                       ))}
                   </div>
@@ -524,9 +572,27 @@ export default function FullMenu() {
                         </p>
                       ) : null}
                     </div>
-                    <p className="full-menu__price">
-                      {formatPrice(Number(item.price))}
-                    </p>
+<div className="full-menu__item-actions">
+  <p className="full-menu__price">
+    {formatPrice(Number(item.price))}
+  </p>
+
+  {normalize(item.category) !== "postres" && (
+    <button
+      type="button"
+      className="full-menu__add"
+      onClick={() => handleAddToCart(item)}
+    >
+      + Afegir
+    </button>
+  )}
+
+  {normalize(item.category) === "postres" && (
+    <span className="full-menu__only-local">
+      Només al restaurant
+    </span>
+  )}
+</div>
                   </article>
                 ))}
               </div>

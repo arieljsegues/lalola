@@ -1,16 +1,18 @@
 
 const contactDetails = [
 
+    {
+    title: "Direcció",
+    value: "Carrer de Llorenç Tomàs i Costa, 8",
+    extra: "La Seu d'Urgell, Lleida  25700",
+  },
+
   {
     title: "Horari",
     value: "De dimecres a diumenge",
     extra: "20:00 – 23:00",
   },
-  {
-    title: "Direcció",
-    value: "Carrer de Llorenç Tomàs i Costa, 8",
-    extra: "La Seu d'Urgell, Lleida  25700",
-  },
+
   {
     title: "Reserves",
     value: "+34 648 80 41 05",
