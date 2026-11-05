@@ -484,11 +484,14 @@ console.log(
           <h1>Comanda enviada!</h1>
           <p>
             La teva comanda s'ha enviat correctament al restaurant.
-            Gràcies per confiar en La Lola!
+
+            En breu, et confirmarem la comanda a través de WhatsApp.
+
+            Moltes gràcies per confiar en La Lola!
           </p>
 
-          <Link href="/carta/" className="button button--primary">
-            Tornar a la carta
+          <Link href="/#inicio" scroll={true} className="button button--primary">
+            Tornar a l'inici
           </Link>
         </div>
       </main>
