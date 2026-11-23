@@ -4,7 +4,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useCart } from "../components/cart/CartProvider";
-import { supabase } from "../lib/supabase/client";
 
 type OrderType = "takeaway" | "delivery";
 type PaymentMethod = "card" | "cash";
@@ -24,6 +23,10 @@ type StoredCustomerData = CustomerData & {
 };
 
 const DELIVERY_FEE = 2;
+
+// WhatsApp de La Lola: +34 648 80 41 05
+// Formato internacional sin +, espacios ni guiones.
+const WHATSAPP_PHONE = "34648804105";
 
 const CUSTOMER_STORAGE_KEY = "lalola-customer-data";
 const CUSTOMER_DATA_MAX_AGE = 180 * 24 * 60 * 60 * 1000;
@@ -56,6 +59,7 @@ function getDateString(date: Date) {
 
 function getDayOfWeek(date: string) {
   if (!date) return -1;
+
   return new Date(`${date}T12:00:00`).getDay();
 }
 
@@ -66,8 +70,15 @@ function formatPrice(price: number) {
   }).format(price);
 }
 
+function formatOrderDate(date: string) {
+  const [year, month, day] = date.split("-");
+
+  return `${day}/${month}/${year}`;
+}
+
 function isValidPhone(phone: string) {
   const cleaned = phone.replace(/[\s\-()]/g, "");
+
   return /^(\+34|0034)?[6789]\d{8}$/.test(cleaned);
 }
 
@@ -88,7 +99,6 @@ export default function CheckoutPage() {
     removeItem,
     addItem,
     updateQuantity,
-    clearCart,
   } = useCart();
 
   const [orderType, setOrderType] = useState<OrderType>("takeaway");
@@ -113,8 +123,6 @@ export default function CheckoutPage() {
 
   const [notice, setNotice] = useState("");
   const [now, setNow] = useState<Date | null>(null);
-  const [isSending, setIsSending] = useState(false);
-  const [orderSent, setOrderSent] = useState(false);
 
   // Recuperar los datos guardados si el cliente dio su consentimiento.
   useEffect(() => {
@@ -146,9 +154,11 @@ export default function CheckoutPage() {
       setPhone(customer.phone || "");
       setStreet(typeof customer.street === "string" ? customer.street : "");
       setFloor(typeof customer.floor === "string" ? customer.floor : "");
+
       setPostalCode(
         typeof customer.postalCode === "string" ? customer.postalCode : ""
       );
+
       setCity(typeof customer.city === "string" ? customer.city : "");
 
       setSaveCustomerData(true);
@@ -170,6 +180,7 @@ export default function CheckoutPage() {
       const currentDate = new Date();
 
       setNow(currentDate);
+
       setDate((previousDate) =>
         previousDate || getDateString(currentDate)
       );
@@ -194,7 +205,8 @@ export default function CheckoutPage() {
 
   const serviceAvailable = !isClosed;
 
-  // Si el usuario elige un día sin domicilio, cambiar a Take Away.
+  // Si el usuario elige un día sin domicilio,
+  // cambiar automáticamente a Take Away.
   useEffect(() => {
     if (!deliveryAvailable && orderType === "delivery") {
       setOrderType("takeaway");
@@ -220,15 +232,18 @@ export default function CheckoutPage() {
       return [];
     }
 
+    // Para días futuros, todos los horarios están disponibles.
     if (date > today) {
       return TIME_OPTIONS;
     }
 
+    // Para hoy, mostrar solamente las horas futuras.
     const currentMinutes =
       now.getHours() * 60 + now.getMinutes();
 
     return TIME_OPTIONS.filter((hour) => {
       const [hours, minutes] = hour.split(":").map(Number);
+
       return hours * 60 + minutes > currentMinutes;
     });
   }, [date, now, today]);
@@ -261,9 +276,13 @@ export default function CheckoutPage() {
 
       setSaveCustomerData(false);
       setHasSavedCustomerData(false);
-      setNotice("Les teves dades desades s'han eliminat d'aquest dispositiu.");
+
+      setNotice(
+        "Les teves dades desades s'han eliminat d'aquest dispositiu."
+      );
     } catch (error) {
       console.error("Error al borrar los datos:", error);
+
       setNotice("No s'han pogut esborrar les dades desades.");
     }
   }
@@ -277,14 +296,20 @@ export default function CheckoutPage() {
     }
   }
 
-  // Enviar pedido a Supabase Edge Function.
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  // Preparar la comanda y abrir WhatsApp.
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    if (isSending) return;
 
     setNotice("");
     setPhoneError("");
+
+    // Comprobar la configuración del WhatsApp del restaurante.
+    if (!/^\d{8,15}$/.test(WHATSAPP_PHONE)) {
+      setNotice(
+        "El número de WhatsApp del restaurante no está configurado correctamente."
+      );
+      return;
+    }
 
     if (items.length === 0) {
       setNotice("El carrito está vacío.");
@@ -300,6 +325,7 @@ export default function CheckoutPage() {
       setPhoneError(
         "Introdueix un número de telèfon vàlid (ex: 612345678)."
       );
+
       setNotice("Si us plau, revisa els errors del formulari.");
       return;
     }
@@ -331,7 +357,9 @@ export default function CheckoutPage() {
         !postalCode.trim() ||
         !city.trim()
       ) {
-        setNotice("Completa todos los campos de la dirección de entrega.");
+        setNotice(
+          "Completa todos los campos de la dirección de entrega."
+        );
         return;
       }
     }
@@ -343,6 +371,7 @@ export default function CheckoutPage() {
       return;
     }
 
+    // Validar el pago en efectivo únicamente para domicilio.
     let parsedCashAmount: number | undefined;
 
     if (orderType === "delivery" && payment === "cash") {
@@ -389,121 +418,111 @@ export default function CheckoutPage() {
       console.error("No se pudieron guardar los datos:", error);
     }
 
-    // Preparar el pedido. Los precios se consultarán en Supabase.
-    const orderPayload = {
-      orderType,
-      name: name.trim(),
-      phone: phone.trim(),
-      date,
-      time,
-      items: items.map((item) => ({
-        id: item.id,
-        quantity: item.quantity,
-      })),
-      ...(orderType === "delivery"
-        ? {
-            street: street.trim(),
-            floor: floor.trim(),
-            postalCode: postalCode.trim(),
-            city: city.trim(),
-            paymentMethod: payment,
-            ...(payment === "cash"
-              ? {
-                  cashOption,
-                  ...(cashOption === "change"
-                    ? { cashAmount: parsedCashAmount }
-                    : {}),
-                }
-              : {}),
-          }
-        : {}),
-    };
 
-    setIsSending(true);
+    // Preparar el missatge de WhatsApp.
+    const messageLines = [
+      "NOVA COMANDA — LA LOLA",
+      "",
+      "CLIENT I COMANDA",
+      `Nom: ${name.trim()}`,
+      `Telèfon: ${phone.trim()}`,
+      `Modalitat: ${orderType === "delivery" ? "Domicili" : "Per emportar"}`,
+      `Data: ${formatOrderDate(date)}`,
+      `Hora de ${orderType === "delivery" ? "lliurament" : "recollida"}: ${time}`,
+      "",
+      "PRODUCTES",
+      ...items.map(
+        (item) => `${item.quantity} x ${item.name}`
+      ),
+      "",
+      "--------------------------------",
+    ];
 
-    try {
-        console.log(
-  "Supabase URL:",
-  process.env.NEXT_PUBLIC_SUPABASE_URL
-);
+    if (orderType === "delivery") {
+      messageLines.push(
+        "",
+        "ADREÇA DE LLIURAMENT",
+        `Carrer: ${street.trim()}`,
+        `Pis i porta: ${floor.trim()}`,
+        `Codi postal: ${postalCode.trim()}`,
+        `Localitat: ${city.trim()}`,
+        "",
+        "--------------------------------",
+        "",
+        "PAGAMENT I IMPORT",
+        `Mètode de pagament: ${payment === "card" ? "Targeta" : "Efectiu"}`
+      );
 
-console.log(
-  "Publishable key disponible:",
-  Boolean(process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
-);
-      const { data, error } = await supabase.functions.invoke(
-        "send-order-whatsapp",
-        {
-          body: orderPayload,
+      if (payment === "cash") {
+        if (cashOption === "change") {
+          messageLines.push(
+            `Pagaré amb: ${formatPrice(parsedCashAmount!)}`
+          );
+          messageLines.push("Cal preparar el canvi.");
+        } else {
+          messageLines.push("Pagaré amb l'import exacte.");
         }
+      }
+
+      messageLines.push(
+        `Productes: ${formatPrice(totalPrice)}`,
+        `Despeses de lliurament: ${formatPrice(DELIVERY_FEE)}`,
+        "",
+        `TOTAL: ${formatPrice(finalTotal)}`
       );
+    } else {
+      messageLines.push(
+        "",
+        "IMPORT",
+        `Productes: ${formatPrice(totalPrice)}`,
+        "",
+        `TOTAL: ${formatPrice(finalTotal)}`
+      );
+    }
 
-      if (error) {
-        console.error("Error llamando a la Edge Function:", error);
+    messageLines.push(
+      "",
+      "--------------------------------",
+      "Comanda preparada des de la web de La Lola."
+    );
+
+    const message = messageLines.join("\n");
+
+    const whatsappUrl =
+      `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
+
+
+    // Abrir WhatsApp en otra pestaña.
+    // Si el navegador bloquea la ventana emergente,
+    // utilizar la pestaña actual como alternativa.
+    try {
+      const whatsappWindow = window.open(whatsappUrl, "_blank");
+
+      if (whatsappWindow) {
+        whatsappWindow.opener = null;
+
         setNotice(
-          "No se ha podido conectar con el servicio de pedidos. Inténtalo de nuevo."
+          "WhatsApp se ha abierto con tu comanda preparada. Revisa el mensaje y pulsa Enviar para confirmar el pedido."
         );
-        return;
+      } else {
+        window.location.assign(whatsappUrl);
       }
-
-      if (!data || data.success !== true) {
-        console.error("La función ha devuelto un error:", data);
-
-        setNotice(
-          typeof data?.error === "string"
-            ? data.error
-            : "No se ha podido enviar el pedido. Inténtalo de nuevo."
-        );
-        return;
-      }
-
-      // Solo vaciar el carrito cuando WhatsApp acepta el envío.
-      clearCart();
-      setOrderSent(true);
-      setNotice("");
     } catch (error) {
-      console.error("Error inesperado al enviar el pedido:", error);
+      console.error("No se pudo abrir WhatsApp:", error);
 
-      setNotice(
-        "Ha ocurrido un error al enviar el pedido. Inténtalo de nuevo."
-      );
-    } finally {
-      setIsSending(false);
+      window.location.assign(whatsappUrl);
     }
   }
 
-  // Pantalla de confirmación.
-  if (orderSent) {
-    return (
-      <main className="checkout">
-        <div className="checkout__empty">
-          <span className="checkout__eyebrow">LA LOLA</span>
-          <div style={{ fontSize: "48px", marginBottom: "16px" }}>
-            ✓
-          </div>
-          <h1>Comanda enviada!</h1>
-          <p>
-            La teva comanda s'ha enviat correctament al restaurant.
-
-            En breu, et confirmarem la comanda a través de WhatsApp.
-
-            Moltes gràcies per confiar en La Lola!
-          </p>
-
-          <Link href="/#inicio" scroll={true} className="button button--primary">
-            Tornar a l'inici
-          </Link>
-        </div>
-      </main>
-    );
-  }
-
+  // Pantalla de carrito vacío.
   if (totalItems === 0) {
     return (
       <main className="checkout">
         <div className="checkout__empty">
           <span className="checkout__eyebrow">LA LOLA</span>
+
           <h1>La teva cistella és buida</h1>
+
           <p>Afegeix productes per continuar.</p>
 
           <Link href="/carta/" className="button button--primary">
@@ -523,7 +542,9 @@ console.log(
           </Link>
 
           <span className="checkout__eyebrow">LA LOLA</span>
+
           <h1>Finalitzar comanda</h1>
+
           <p>
             Ja falta molt poc per gaudir del teu menjar preferit.
           </p>
@@ -536,7 +557,7 @@ console.log(
           >
             {/* 1. Modalidad de la comanda */}
             <section className="checkout__section">
-              <h2>¿Com vols rebre la teva comanda?</h2>
+              <h2>1. ¿Com vols rebre la teva comanda?</h2>
 
               <div className="checkout__service-options">
                 <button
@@ -551,8 +572,12 @@ console.log(
                     setNotice("");
                   }}
                 >
-                  <span className="checkout__service-icon">🥡</span>
+                  <span className="checkout__service-icon">
+                    🥡
+                  </span>
+
                   <strong>Take Away</strong>
+
                   <small>Recollir al restaurant</small>
                 </button>
 
@@ -569,8 +594,12 @@ console.log(
                     setNotice("");
                   }}
                 >
-                  <span className="checkout__service-icon">🛵</span>
+                  <span className="checkout__service-icon">
+                    🛵
+                  </span>
+
                   <strong>Domicili</strong>
+
                   <small>
                     {deliveryAvailable
                       ? "+2,00 € de suplement"
@@ -600,6 +629,7 @@ console.log(
               <div className="checkout__fields">
                 <label className="checkout__field">
                   Nom complet
+
                   <input
                     type="text"
                     value={name}
@@ -612,6 +642,7 @@ console.log(
 
                 <label className="checkout__field">
                   Telèfon
+
                   <input
                     type="tel"
                     value={phone}
@@ -665,9 +696,10 @@ console.log(
                     </strong>
 
                     <small>
-                      Desarem el teu nom, telèfon i adreça
-                      en aquest navegador perquè no hagis de
-                      introduir-los en futures compres. No s'emmagatzemen al núvol ni a altres dispositius.
+                      Desarem el teu nom, telèfon i adreça en aquest
+                      navegador perquè no hagis de tornar a introduir-los
+                      en futures compres. No s'emmagatzemen al núvol ni
+                      en altres dispositius.
                     </small>
                   </span>
                 </label>
@@ -692,6 +724,7 @@ console.log(
                 <div className="checkout__fields">
                   <label className="checkout__field checkout__field--full">
                     Carrer i número
+
                     <input
                       type="text"
                       value={street}
@@ -704,6 +737,7 @@ console.log(
 
                   <label className="checkout__field">
                     Pis i porta
+
                     <input
                       type="text"
                       value={floor}
@@ -715,6 +749,7 @@ console.log(
 
                   <label className="checkout__field">
                     Codi postal
+
                     <input
                       type="text"
                       value={postalCode}
@@ -727,6 +762,7 @@ console.log(
 
                   <label className="checkout__field checkout__field--full">
                     Localitat
+
                     <input
                       type="text"
                       value={city}
@@ -742,7 +778,9 @@ console.log(
 
             {/* 4. Fecha y hora */}
             <section className="checkout__section">
-              <h2>{orderType === "delivery" ? "4." : "3."} Data i hora</h2>
+              <h2>
+                {orderType === "delivery" ? "4." : "3."} Data i hora
+              </h2>
 
               <div className="checkout__fields">
                 <label className="checkout__field">
@@ -778,6 +816,7 @@ console.log(
                     {TIME_OPTIONS.map((hour) => {
                       const available =
                         availableTimeOptions.includes(hour);
+
                       const selected = time === hour;
 
                       return (
@@ -843,6 +882,7 @@ console.log(
                       checked={payment === "card"}
                       onChange={() => setPayment("card")}
                     />
+
                     <span>💳</span>
                     Targeta
                   </label>
@@ -861,6 +901,7 @@ console.log(
                       checked={payment === "cash"}
                       onChange={() => setPayment("cash")}
                     />
+
                     <span>💶</span>
                     Efectiu
                   </label>
@@ -891,7 +932,10 @@ console.log(
                         checked={cashOption === "exact"}
                         onChange={() => setCashOption("exact")}
                       />
-                      <span>No necessito canvi (import exacte)</span>
+
+                      <span>
+                        No necessito canvi (import exacte)
+                      </span>
                     </label>
 
                     <label
@@ -909,6 +953,7 @@ console.log(
                         checked={cashOption === "change"}
                         onChange={() => setCashOption("change")}
                       />
+
                       <span>Pagaré amb...</span>
                     </label>
 
@@ -932,7 +977,7 @@ console.log(
 
                         <small className="checkout__time-message">
                           Indica el bitllet o import amb què pagaràs
-                          per portar-te el canvi.
+                          perquè puguem preparar el canvi.
                         </small>
                       </div>
                     )}
@@ -941,31 +986,71 @@ console.log(
               </section>
             )}
 
+            {/* Explicación del funcionamiento de WhatsApp */}
+                        
+            <section className="checkout__whatsapp-help">
+              <div className="checkout__whatsapp-heading">
+                <strong>Ja gairebé ho tenim!</strong>
+                <span>Només et falta un últim pas.</span>
+              </div>
+
+              <div className="checkout__whatsapp-steps">
+                <div className="checkout__whatsapp-step">
+                  <span className="checkout__whatsapp-number">1</span>
+                  <p>
+                    Prem <strong>Preparar comanda</strong> i obrirem WhatsApp
+                    amb totes les dades de la teva comanda.
+                  </p>
+                </div>
+
+                <div className="checkout__whatsapp-step">
+                  <span className="checkout__whatsapp-number">2</span>
+                  <p>
+                    Revisa que les dades i els productes siguin correctes.
+                  </p>
+                </div>
+
+                <div className="checkout__whatsapp-step">
+                  <span className="checkout__whatsapp-number">3</span>
+                  <p>
+                    Prem <strong>Enviar</strong> a WhatsApp i ja tindrem
+                    la teva comanda!
+                  </p>
+                </div>
+              </div>
+
+              <p className="checkout__whatsapp-note">
+                Important: fins que no premis Enviar a WhatsApp,
+                no rebrem la teva comanda.
+              </p>
+            </section>
+
+
+            {/* Mensajes de validación e información */}
             {notice && (
               <p className="checkout__notice" role="status">
                 {notice}
               </p>
             )}
 
+            {/* Botón para abrir WhatsApp */}
             <button
               type="submit"
               className="button button--primary checkout__submit"
               disabled={
-                isSending ||
                 isClosed ||
                 !date ||
                 !time ||
                 !availableTimeOptions.includes(time)
               }
             >
-              {isSending
-                ? "Enviant comanda..."
-                : `Enviar comanda · ${formatPrice(finalTotal)}`}
+              Preparar comanda en WhatsApp · {formatPrice(finalTotal)}
             </button>
 
             <p className="checkout__disclaimer">
-              En prémer el botó, la comanda s'enviarà directament al
-              restaurant. No caldrà obrir WhatsApp ni prémer Enviar.
+              S'obrirà WhatsApp amb la teva comanda preparada.
+              Recorda prémer Enviar dins de WhatsApp perquè
+              La Lola rebi la teva comanda.
             </p>
           </form>
 
@@ -975,7 +1060,10 @@ console.log(
 
             <div className="checkout__summary-items">
               {items.map((item) => (
-                <div className="checkout__summary-item" key={item.id}>
+                <div
+                  className="checkout__summary-item"
+                  key={item.id}
+                >
                   <div className="checkout__summary-info">
                     <strong>{item.name}</strong>
 
@@ -1045,7 +1133,10 @@ console.log(
               </div>
             </div>
 
-            <Link href="/carta/" className="checkout__continue">
+            <Link
+              href="/carta/"
+              className="checkout__continue"
+            >
               + Afegir més productes
             </Link>
           </aside>
