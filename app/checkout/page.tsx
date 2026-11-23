@@ -502,7 +502,7 @@ export default function CheckoutPage() {
         whatsappWindow.opener = null;
 
         setNotice(
-          "WhatsApp se ha abierto con tu comanda preparada. Revisa el mensaje y pulsa Enviar para confirmar el pedido."
+          "WhatsApp s'ha obert amb la teva comanda a punt. Comprova el missatge i toca 'Envia' per confirmar la teva comanda."
         );
       } else {
         window.location.assign(whatsappUrl);
